@@ -918,7 +918,7 @@ if (typeof Slick === "undefined") {
     }
 
     function createCssRules() {
-      $style = $("<style type='text/css' rel='stylesheet' />").appendTo($("head"));
+      $style = $("<style type='text/css' rel='stylesheet' />").appendTo($container);
       var rowHeight = (options.rowHeight - cellHeightDiff);
       var rules = [
         "." + uid + " .slick-header-column { left: 1000px; }",
@@ -942,7 +942,7 @@ if (typeof Slick === "undefined") {
 
     function getColumnCssRules(idx) {
       if (!stylesheet) {
-        var sheets = document.styleSheets;
+        var sheets = document.querySelector('slick-grid').shadowRoot.styleSheets;
         for (var i = 0; i < sheets.length; i++) {
           if ((sheets[i].ownerNode || sheets[i].owningElement) == $style[0]) {
             stylesheet = sheets[i];
@@ -2662,7 +2662,7 @@ if (typeof Slick === "undefined") {
 
       // walk up the tree
       var offsetParent = elem.offsetParent;
-      while ((elem = elem.parentNode) != document.body) {
+      while ((elem = elem.parentNode) != document.body && elem != null) {
         if (box.visible && elem.scrollHeight != elem.offsetHeight && $(elem).css("overflowY") != "visible") {
           box.visible = box.bottom > elem.scrollTop && box.top < elem.scrollTop + elem.clientHeight;
         }
